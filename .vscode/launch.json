@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        /*{
+            "name": "C#: WebApi Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/WebApi/WebApi.csproj"
+        },*/
+        {
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/WebApi/bin/Debug/net8.0/WebApi.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "APP_CONNECTION_STRING": "Host=localhost;Port=5432;Username=postgres;Password=password2023;Database=bl-ti;",
+                "APP_ENABLE_HTTPS_REDIRECTION": "true"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        }
+    ]
+}
