@@ -1,4 +1,9 @@
+using BlTechInterviewE3.Data.Mapper;
+using BlTechInterviewE3.Business.Domain;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IDataMapper<Book>, BookDataMapper>();
 
 builder.Services.AddControllers();
 

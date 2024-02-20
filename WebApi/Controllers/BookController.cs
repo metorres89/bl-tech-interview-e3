@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlTechInterviewE3.Business.Domain;
 using Microsoft.AspNetCore.Components.Web;
+using BlTechInterviewE3.Data.Mapper;
 
 namespace BlTechInterviewE3.WebApi.Controllers;
 
@@ -8,21 +9,22 @@ namespace BlTechInterviewE3.WebApi.Controllers;
 [Route("[controller]")]
 public class BookController : ControllerBase
 {
+    private IDataMapper<Book> _bookDataMapper;
     private readonly ILogger<BookController> _logger;
 
-    public BookController(ILogger<BookController> logger)
+    public BookController(
+        ILogger<BookController> logger,
+        IDataMapper<Book> bookDataMapper
+    )
     {
         _logger = logger;
+        _bookDataMapper = bookDataMapper;
     }
 
     [HttpGet(Name = "GetBook")]
-    public IEnumerable<Book> Get()
+    public async Task<IEnumerable<Book>> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new Book
-        {
-            Title = "Your fav book",
-            ISBN = "978-3-16-148410-0"
-        })
-        .ToArray();
+        IEnumerable<Book> books = await _bookDataMapper.GetAll();
+        return books;
     }
 }
