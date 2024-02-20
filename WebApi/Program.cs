@@ -3,7 +3,9 @@ using BlTechInterviewE3.Business.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IDataMapper<Book>, BookDataMapper>();
+builder.Services.AddScoped<IDataMapper<Book>, BookDataMapper>(serviceProvider => {
+    return new BookDataMapper(Environment.GetEnvironmentVariable("APP_CONNECTION_STRING"));
+});
 
 builder.Services.AddControllers();
 
@@ -21,7 +23,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+bool enableHttpsRedirection;
+bool parsed = bool.TryParse(Environment.GetEnvironmentVariable("APP_ENABLE_HTTPS_REDIRECTION"), out enableHttpsRedirection);
+
+if(parsed && enableHttpsRedirection)
+    app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
