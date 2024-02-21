@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlTechInterviewE3.Business.Domain;
-using BlTechInterviewE3.Business.Utils;
-using Microsoft.AspNetCore.Components.Web;
-using BlTechInterviewE3.Data.Mapper;
+using BlTechInterviewE3.Business.Service.Contract;
 
 namespace BlTechInterviewE3.WebApi.Controllers;
 
@@ -10,22 +8,22 @@ namespace BlTechInterviewE3.WebApi.Controllers;
 [Route("[controller]")]
 public class BookController : ControllerBase
 {
-    private IDataMapper<Book> _bookDataMapper;
+    private IBookService _bookService;
     private readonly ILogger<BookController> _logger;
 
     public BookController(
         ILogger<BookController> logger,
-        IDataMapper<Book> bookDataMapper
+        IBookService bookService
     )
     {
         _logger = logger;
-        _bookDataMapper = bookDataMapper;
+        _bookService = bookService;
     }
 
     [HttpGet(Name = "GetBook")]
     public async Task<IEnumerable<Book>> Get()
     {
-        IEnumerable<Book> books = await _bookDataMapper.GetAll();
+        IEnumerable<Book> books = await _bookService.GetAll();
         return books;
     }
 }

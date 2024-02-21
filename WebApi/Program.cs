@@ -2,6 +2,8 @@ using BlTechInterviewE3.Data.Mapper;
 using BlTechInterviewE3.Data.Utils;
 using BlTechInterviewE3.Business.Domain;
 using BlTechInterviewE3.Business.Utils;
+using BlTechInterviewE3.Business.Service;
+using BlTechInterviewE3.Business.Service.Contract;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,7 @@ builder.Services.AddScoped<IDbConnectionFactory, NpgsqlConnectionFactory>(servic
     return new NpgsqlConnectionFactory(Environment.GetEnvironmentVariable("APP_CONNECTION_STRING") ?? string.Empty);
 });
 builder.Services.AddScoped<IDataMapper<Book>, BookDataMapper>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 builder.Services.AddControllers();
 
