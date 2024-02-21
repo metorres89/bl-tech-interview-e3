@@ -1,24 +1,23 @@
 using BlTechInterviewE3.Business.Domain;
-using Npgsql;
+using System.Data;
+using System.Data.Common;
+using BlTechInterviewE3.Data.Utils;
 
 namespace BlTechInterviewE3.Data.Mapper;
 
 public class BookDataMapper : IDataMapper<Book> {
-    private string _connectionString = "Host=localhost;Port=5432;Username=postgres;Password=password2023;Database=bl-ti;";
+    private IDbConnectionFactory _dbConnectionFactory;
 
     private string TableName = "book";
 
-    public BookDataMapper(string connectionString) {
-        this._connectionString = connectionString;
+    public BookDataMapper(IDbConnectionFactory dbConnectionFactory) {
+        this._dbConnectionFactory = dbConnectionFactory;
     }
 
-    private IList<Book> GetCollection(NpgsqlDataReader reader) {
+    private IList<Book> GetCollection(DbDataReader reader) {
         IList<Book> books = new List<Book>();
         while (reader.Read())
         {
-            // Process the results
-            //Console.WriteLine(reader["ColumnName"]);
-
             books.Add(
                 new Book {
                     Id = (int) reader["id"],
@@ -34,14 +33,14 @@ public class BookDataMapper : IDataMapper<Book> {
 
         IEnumerable<Book> books;
 
-        using (NpgsqlConnection connection = new NpgsqlConnection(this._connectionString)) {
+        using (DbConnection connection = this._dbConnectionFactory.GetConnection()) {
             
             await connection.OpenAsync();
 
-            using (NpgsqlCommand command = connection.CreateCommand()) {
+            using (DbCommand command = connection.CreateCommand()) {
                 command.CommandText = $"SELECT * FROM {this.TableName}";
 
-                using (NpgsqlDataReader reader = await command.ExecuteReaderAsync()) {
+                using (DbDataReader reader = await command.ExecuteReaderAsync()) {
                     books = this.GetCollection(reader);
                     reader.Close();
                 }        
