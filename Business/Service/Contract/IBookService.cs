@@ -12,4 +12,6 @@ public interface IBookService {
     Task<Book> Update(Book book);
 
     Task<Book> Patch(Book book);
+
+    Task<bool> Delete(Book book);
 }

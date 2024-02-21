@@ -10,4 +10,6 @@ public interface ICommonService<T> {
     Task<T> Update(T entity);
 
     Task<T> Patch(T entity);
+
+    Task<bool> Delete(T entity);
 }

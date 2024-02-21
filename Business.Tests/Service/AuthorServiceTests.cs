@@ -32,5 +32,85 @@ public class AuthorServiceTests {
         
         //assert
         Assert.IsNotNull(collection, "the collection should not be null");
+        Assert.IsTrue(collection.Any(), "the collection has elements");
+    }
+
+    [TestMethod]
+    public async Task GetById_WhenThereAreAuthors_ShouldReturnASingleAuthor() {
+        
+        //arrange
+        Author mockedAuthor = new Author { Id = 1 };
+        this._authorMapperMock.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(mockedAuthor);
+
+        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+
+        //act
+        Author entity = await service.GetById(1);
+        
+        //assert
+        Assert.IsNotNull(entity, "the entity should not be null");
+    }
+
+    [TestMethod]
+    public async Task Create_WhenThereAreNoExceptions_ShouldReturnCreatedAuthor() {
+        
+        //arrange
+        Author mockedAuthor = new Author { Id = 1 };
+        this._authorMapperMock.Setup(x => x.Create(It.IsAny<Author>())).ReturnsAsync(mockedAuthor);
+
+        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+
+        //act
+        Author entity = await service.Create(new Author());
+        
+        //assert
+        Assert.IsNotNull(entity, "the entity should not be null");
+    }
+
+    [TestMethod]
+    public async Task Update_WhenThereAreNoExceptions_ShouldReturnUpdatedAuthor() {
+        
+        //arrange
+        Author mockedAuthor = new Author { Id = 1 };
+        this._authorMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Author>())).ReturnsAsync(mockedAuthor);
+
+        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+
+        //act
+        Author entity = await service.Update(new Author { Id = 1 });
+        
+        //assert
+        Assert.IsNotNull(entity, "the entity should not be null");
+    }
+
+    [TestMethod]
+    public async Task Patch_WhenThereAreNoExceptions_ShouldReturnPatchedAuthor() {
+        
+        //arrange
+        Author mockedAuthor = new Author { Id = 1 };
+        this._authorMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Author>())).ReturnsAsync(mockedAuthor);
+
+        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+
+        //act
+        Author entity = await service.Patch(new Author { Id = 1 });
+        
+        //assert
+        Assert.IsNotNull(entity, "the entity should not be null");
+    }
+
+    [TestMethod]
+    public async Task Delete_WhenThereAreNoExceptions_ShouldReturnDeleteStatus() {
+        
+        //arrange
+        this._authorMapperMock.Setup(x => x.Delete(It.IsAny<int>())).ReturnsAsync(true);
+
+        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+
+        //act
+        bool deleteStatus = await service.Delete(new Author { Id = 1 });
+        
+        //assert
+        Assert.IsTrue(deleteStatus, "Delete should return the status of the operation");
     }
 }

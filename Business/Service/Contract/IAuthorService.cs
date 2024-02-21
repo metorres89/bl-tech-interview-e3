@@ -12,4 +12,6 @@ public interface IAuthorService {
     Task<Author> Update(Author author);
 
     Task<Author> Patch(Author author);
+
+    Task<bool> Delete(Author author);
 }

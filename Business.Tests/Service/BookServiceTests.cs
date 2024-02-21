@@ -32,5 +32,85 @@ public class BookServiceTests {
         
         //assert
         Assert.IsNotNull(collection, "the collection should not be null");
+        Assert.IsTrue(collection.Any(), "the collection has elements");
+    }
+
+    [TestMethod]
+    public async Task GetById_WhenThereAreBooks_ShouldReturnASingleBook() {
+        
+        //arrange
+        Book mockedBook = new Book { Id = 1 };
+        this._bookMapperMock.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(mockedBook);
+
+        BookService service = new BookService(this._bookMapperMock.Object);
+
+        //act
+        Book entity = await service.GetById(1);
+        
+        //assert
+        Assert.IsNotNull(entity, "the entity should not be null");
+    }
+
+    [TestMethod]
+    public async Task Create_WhenThereAreNoExceptions_ShouldReturnCreatedBook() {
+        
+        //arrange
+        Book mockedBook = new Book { Id = 1 };
+        this._bookMapperMock.Setup(x => x.Create(It.IsAny<Book>())).ReturnsAsync(mockedBook);
+
+        BookService service = new BookService(this._bookMapperMock.Object);
+
+        //act
+        Book entity = await service.Create(new Book());
+        
+        //assert
+        Assert.IsNotNull(entity, "the entity should not be null");
+    }
+
+    [TestMethod]
+    public async Task Update_WhenThereAreNoExceptions_ShouldReturnUpdatedBook() {
+        
+        //arrange
+        Book mockedBook = new Book { Id = 1 };
+        this._bookMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Book>())).ReturnsAsync(mockedBook);
+
+        BookService service = new BookService(this._bookMapperMock.Object);
+
+        //act
+        Book entity = await service.Update(new Book { Id = 1 });
+        
+        //assert
+        Assert.IsNotNull(entity, "the entity should not be null");
+    }
+
+    [TestMethod]
+    public async Task Patch_WhenThereAreNoExceptions_ShouldReturnPatchedBook() {
+        
+        //arrange
+        Book mockedBook = new Book { Id = 1 };
+        this._bookMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Book>())).ReturnsAsync(mockedBook);
+
+        BookService service = new BookService(this._bookMapperMock.Object);
+
+        //act
+        Book entity = await service.Patch(new Book { Id = 1 });
+        
+        //assert
+        Assert.IsNotNull(entity, "the entity should not be null");
+    }
+
+    [TestMethod]
+    public async Task Delete_WhenThereAreNoExceptions_ShouldReturnDeleteStatus() {
+        
+        //arrange
+        this._bookMapperMock.Setup(x => x.Delete(It.IsAny<int>())).ReturnsAsync(true);
+
+        BookService service = new BookService(this._bookMapperMock.Object);
+
+        //act
+        bool deleteStatus = await service.Delete(new Book { Id = 1 });
+        
+        //assert
+        Assert.IsTrue(deleteStatus, "Delete should return the status of the operation");
     }
 }

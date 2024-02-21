@@ -32,4 +32,8 @@ public class AuthorService : IAuthorService {
     public async Task<Author> Patch(Author author) {
         throw new NotImplementedException("Method not implemented!");
     }
+
+    public async Task<bool> Delete(Author author) {
+        throw new NotImplementedException("Method not implemented!");
+    }
 }

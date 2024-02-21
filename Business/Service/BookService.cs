@@ -31,4 +31,8 @@ public class BookService : IBookService {
     public async Task<Book> Patch(Book book) {
         throw new NotImplementedException("Method not implemented!");
     }
+
+    public async Task<bool> Delete(Book book) {
+        throw new NotImplementedException("Method not implemented!");
+    }
 }
