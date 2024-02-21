@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using BlTechInterviewE3.Business.Domain;
 using BlTechInterviewE3.Business.Service.Contract;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace BlTechInterviewE3.WebApi.Controllers;
 
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [ApiController]
 [Route("api/books")]
 public class BookController : ControllerBase

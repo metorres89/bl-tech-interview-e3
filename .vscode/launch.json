@@ -22,7 +22,11 @@
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
                 "APP_CONNECTION_STRING": "Host=localhost;Port=5432;Username=postgres;Password=password2023;Database=bl-ti;",
-                "APP_ENABLE_HTTPS_REDIRECTION": "true"
+                "APP_ENABLE_HTTPS_REDIRECTION": "true",
+                "APP_JWT_SECRET_KEY": "aVvJIKz0NV14bbdMHL2EORCpIDFkDohA1k9sm3nv",
+                "APP_JWT_ISSUER": "WebApp.Auth.Dev",
+                "APP_JWT_AUDIENCE": "WebApp.Dev",
+                "APP_JWT_EXPIRATION_IN_MINUTES": "10"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
