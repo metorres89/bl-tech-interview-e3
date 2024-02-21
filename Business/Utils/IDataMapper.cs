@@ -1,4 +1,4 @@
-namespace BlTechInterviewE3.Data.Mapper;
+namespace BlTechInterviewE3.Business.Utils;
 
 public interface IDataMapper<T> {
 

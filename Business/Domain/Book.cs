@@ -1,13 +1,15 @@
-﻿namespace BlTechInterviewE3.Business.Domain;
+﻿using BlTechInterviewE3.Business.Domain.Common;
 
-public class Book {
-    public int Id { get; set; }
+namespace BlTechInterviewE3.Business.Domain;
+
+public class Book : BaseEntity {
     public string Title { get; set; }
     public string ISBN { get; set; }
+    public Author Author { get; set; }
 
-    public Book() {
-        this.Id = 0;
+    public Book() : base() {
         this.Title = string.Empty;
         this.ISBN = string.Empty;
+        this.Author = new Author();
     }
 }
