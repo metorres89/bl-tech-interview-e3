@@ -88,6 +88,8 @@ public class AuthorServiceTests {
         
         //arrange
         Author mockedAuthor = new Author { Id = 1 };
+        
+        _authorMapperMock.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(mockedAuthor);
         _authorMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Author>())).ReturnsAsync(mockedAuthor);
 
         AuthorService service = new AuthorService(_authorMapperMock.Object);
