@@ -1,11 +1,20 @@
 using BlTechInterviewE3.Business.Domain;
+using BlTechInterviewE3.Business.Utils;
 using BlTechInterviewE3.Business.Service.Contract;
 
 namespace BlTechInterviewE3.Business.Service;
 
 public class AuthorService : IAuthorService {
+
+    private IDataMapper<Author> _authorDataMapper;
+
+    public AuthorService(IDataMapper<Author> authorDataMapper) {
+        this._authorDataMapper = authorDataMapper ?? throw new ArgumentNullException("Author data mapper is null");
+    }
+
     public async Task<IEnumerable<Author>> GetAll() {
-        throw new NotImplementedException("Method not implemented!");
+        IEnumerable<Author> authors = await this._authorDataMapper.GetAll();
+        return authors;
     }
 
     public async Task<Author> GetById(int id) {

@@ -1,11 +1,19 @@
 using BlTechInterviewE3.Business.Domain;
 using BlTechInterviewE3.Business.Service.Contract;
+using BlTechInterviewE3.Business.Utils;
 
 namespace BlTechInterviewE3.Business.Service;
 
 public class BookService : IBookService {
+    private IDataMapper<Book> _bookDataMapper;
+
+    public BookService(IDataMapper<Book> bookDataMapper) {
+        this._bookDataMapper = bookDataMapper ?? throw new ArgumentNullException("Book data mapper is null");
+    }
+
     public async Task<IEnumerable<Book>> GetAll() {
-        throw new NotImplementedException("Method not implemented!");
+        IEnumerable<Book> books = await this._bookDataMapper.GetAll();
+        return books;
     }
 
     public async Task<Book> GetById(int id) {
