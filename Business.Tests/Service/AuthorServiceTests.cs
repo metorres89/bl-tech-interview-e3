@@ -11,7 +11,7 @@ public class AuthorServiceTests {
     private Mock<IDataMapper<Author>> _authorMapperMock; 
 
     public AuthorServiceTests() {
-        this._authorMapperMock = new Mock<IDataMapper<Author>>();
+        _authorMapperMock = new Mock<IDataMapper<Author>>();
     }
 
     [TestMethod]
@@ -23,9 +23,9 @@ public class AuthorServiceTests {
             new Author { Id = 1 },
             new Author { Id = 2 }
         };
-        this._authorMapperMock.Setup(x => x.GetAll()).ReturnsAsync(mockedAuthors);
+        _authorMapperMock.Setup(x => x.GetAll()).ReturnsAsync(mockedAuthors);
 
-        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+        AuthorService service = new AuthorService(_authorMapperMock.Object);
 
         //act
         IEnumerable<Author> collection = await service.GetAll();
@@ -40,9 +40,9 @@ public class AuthorServiceTests {
         
         //arrange
         Author mockedAuthor = new Author { Id = 1 };
-        this._authorMapperMock.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(mockedAuthor);
+        _authorMapperMock.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(mockedAuthor);
 
-        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+        AuthorService service = new AuthorService(_authorMapperMock.Object);
 
         //act
         Author entity = await service.GetById(1);
@@ -56,9 +56,9 @@ public class AuthorServiceTests {
         
         //arrange
         Author mockedAuthor = new Author { Id = 1 };
-        this._authorMapperMock.Setup(x => x.Create(It.IsAny<Author>())).ReturnsAsync(mockedAuthor);
+        _authorMapperMock.Setup(x => x.Create(It.IsAny<Author>())).ReturnsAsync(mockedAuthor);
 
-        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+        AuthorService service = new AuthorService(_authorMapperMock.Object);
 
         //act
         Author entity = await service.Create(new Author());
@@ -72,9 +72,9 @@ public class AuthorServiceTests {
         
         //arrange
         Author mockedAuthor = new Author { Id = 1 };
-        this._authorMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Author>())).ReturnsAsync(mockedAuthor);
+        _authorMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Author>())).ReturnsAsync(mockedAuthor);
 
-        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+        AuthorService service = new AuthorService(_authorMapperMock.Object);
 
         //act
         Author entity = await service.Update(new Author { Id = 1 });
@@ -88,9 +88,9 @@ public class AuthorServiceTests {
         
         //arrange
         Author mockedAuthor = new Author { Id = 1 };
-        this._authorMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Author>())).ReturnsAsync(mockedAuthor);
+        _authorMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Author>())).ReturnsAsync(mockedAuthor);
 
-        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+        AuthorService service = new AuthorService(_authorMapperMock.Object);
 
         //act
         Author entity = await service.Patch(new Author { Id = 1 });
@@ -103,9 +103,9 @@ public class AuthorServiceTests {
     public async Task Delete_WhenThereAreNoExceptions_ShouldReturnDeleteStatus() {
         
         //arrange
-        this._authorMapperMock.Setup(x => x.Delete(It.IsAny<int>())).ReturnsAsync(true);
+        _authorMapperMock.Setup(x => x.Delete(It.IsAny<int>())).ReturnsAsync(true);
 
-        AuthorService service = new AuthorService(this._authorMapperMock.Object);
+        AuthorService service = new AuthorService(_authorMapperMock.Object);
 
         //act
         bool deleteStatus = await service.Delete(new Author { Id = 1 });

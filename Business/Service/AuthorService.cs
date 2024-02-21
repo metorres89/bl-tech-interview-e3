@@ -9,11 +9,11 @@ public class AuthorService : IAuthorService {
     private IDataMapper<Author> _authorDataMapper;
 
     public AuthorService(IDataMapper<Author> authorDataMapper) {
-        this._authorDataMapper = authorDataMapper ?? throw new ArgumentNullException("Author data mapper is null");
+        _authorDataMapper = authorDataMapper ?? throw new ArgumentNullException("Author data mapper is null");
     }
 
     public async Task<IEnumerable<Author>> GetAll() {
-        IEnumerable<Author> authors = await this._authorDataMapper.GetAll();
+        IEnumerable<Author> authors = await _authorDataMapper.GetAll();
         return authors;
     }
 

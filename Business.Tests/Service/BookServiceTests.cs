@@ -11,7 +11,7 @@ public class BookServiceTests {
     private Mock<IDataMapper<Book>> _bookMapperMock;
 
     public BookServiceTests() {
-        this._bookMapperMock = new Mock<IDataMapper<Book>>();
+        _bookMapperMock = new Mock<IDataMapper<Book>>();
     }    
 
     [TestMethod]
@@ -23,9 +23,9 @@ public class BookServiceTests {
             new Book { Id = 2 }
         };
 
-        this._bookMapperMock.Setup(x => x.GetAll()).ReturnsAsync(mockedBooks);
+        _bookMapperMock.Setup(x => x.GetAll()).ReturnsAsync(mockedBooks);
 
-        BookService service = new BookService(this._bookMapperMock.Object);
+        BookService service = new BookService(_bookMapperMock.Object);
 
         //act
         IEnumerable<Book> collection = await service.GetAll();
@@ -40,9 +40,9 @@ public class BookServiceTests {
         
         //arrange
         Book mockedBook = new Book { Id = 1 };
-        this._bookMapperMock.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(mockedBook);
+        _bookMapperMock.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(mockedBook);
 
-        BookService service = new BookService(this._bookMapperMock.Object);
+        BookService service = new BookService(_bookMapperMock.Object);
 
         //act
         Book entity = await service.GetById(1);
@@ -56,9 +56,9 @@ public class BookServiceTests {
         
         //arrange
         Book mockedBook = new Book { Id = 1 };
-        this._bookMapperMock.Setup(x => x.Create(It.IsAny<Book>())).ReturnsAsync(mockedBook);
+        _bookMapperMock.Setup(x => x.Create(It.IsAny<Book>())).ReturnsAsync(mockedBook);
 
-        BookService service = new BookService(this._bookMapperMock.Object);
+        BookService service = new BookService(_bookMapperMock.Object);
 
         //act
         Book entity = await service.Create(new Book());
@@ -72,9 +72,9 @@ public class BookServiceTests {
         
         //arrange
         Book mockedBook = new Book { Id = 1 };
-        this._bookMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Book>())).ReturnsAsync(mockedBook);
+        _bookMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Book>())).ReturnsAsync(mockedBook);
 
-        BookService service = new BookService(this._bookMapperMock.Object);
+        BookService service = new BookService(_bookMapperMock.Object);
 
         //act
         Book entity = await service.Update(new Book { Id = 1 });
@@ -88,9 +88,11 @@ public class BookServiceTests {
         
         //arrange
         Book mockedBook = new Book { Id = 1 };
-        this._bookMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Book>())).ReturnsAsync(mockedBook);
+        
+        _bookMapperMock.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(mockedBook);
+        _bookMapperMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<Book>())).ReturnsAsync(mockedBook);
 
-        BookService service = new BookService(this._bookMapperMock.Object);
+        BookService service = new BookService(_bookMapperMock.Object);
 
         //act
         Book entity = await service.Patch(new Book { Id = 1 });
@@ -103,9 +105,9 @@ public class BookServiceTests {
     public async Task Delete_WhenThereAreNoExceptions_ShouldReturnDeleteStatus() {
         
         //arrange
-        this._bookMapperMock.Setup(x => x.Delete(It.IsAny<int>())).ReturnsAsync(true);
+        _bookMapperMock.Setup(x => x.Delete(It.IsAny<int>())).ReturnsAsync(true);
 
-        BookService service = new BookService(this._bookMapperMock.Object);
+        BookService service = new BookService(_bookMapperMock.Object);
 
         //act
         bool deleteStatus = await service.Delete(new Book { Id = 1 });

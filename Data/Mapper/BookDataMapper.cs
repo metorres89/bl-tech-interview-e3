@@ -12,7 +12,7 @@ public class BookDataMapper : IDataMapper<Book> {
     private string TableName = "book";
 
     public BookDataMapper(IDbConnectionFactory dbConnectionFactory) {
-        this._dbConnectionFactory = dbConnectionFactory;
+        _dbConnectionFactory = dbConnectionFactory;
     }
 
     private IList<Book> GetCollection(DbDataReader reader) {
@@ -34,7 +34,7 @@ public class BookDataMapper : IDataMapper<Book> {
 
         IEnumerable<Book> books;
 
-        using (DbConnection connection = this._dbConnectionFactory.GetConnection()) {
+        using (DbConnection connection = _dbConnectionFactory.GetConnection()) {
             
             await connection.OpenAsync();
 

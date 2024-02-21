@@ -8,11 +8,11 @@ public class NpgsqlConnectionFactory : IDbConnectionFactory {
     private string _connectionString;
 
     public NpgsqlConnectionFactory(string connectionString) {
-        this._connectionString = connectionString;
+        _connectionString = connectionString;
     }
 
     public DbConnection GetConnection() {
-        return new NpgsqlConnection(this._connectionString);
+        return new NpgsqlConnection(_connectionString);
     }
 
     public DbConnection GetConnection(string connectionString) {
