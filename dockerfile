@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
 # Expose the port that the application will run on
-EXPOSE 8080
+EXPOSE 5000
 
 # Copy the published output of your .NET Core web application into the container
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build

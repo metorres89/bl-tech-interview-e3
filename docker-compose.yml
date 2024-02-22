@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: dockerfile
     ports:
-      - "8080:8080"
+      - "8080:5000"
     depends_on:
       - db
     environment:
@@ -16,6 +16,7 @@ services:
       APP_JWT_ISSUER: "WebApp.Auth.Dev"
       APP_JWT_AUDIENCE: "WebApp.Dev"
       APP_JWT_EXPIRATION_IN_MINUTES: "10"
+      ASPNETCORE_URLS: "http://+:5000"
 
   db:
     build:

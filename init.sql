@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS public.book
     CONSTRAINT book_pkey PRIMARY KEY (id)
 );
 
-TABLESPACE pg_default;
+--TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.book
     OWNER to postgres;
@@ -36,7 +36,7 @@ CREATE TABLE public.user (
     update_user VARCHAR(255)
 );
 
-TABLESPACE pg_default;
+--TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.user
     OWNER to postgres;

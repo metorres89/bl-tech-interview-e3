@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "62bf62e3-84e9-4aac-ab0b-f4a02f8adafd",
+		"name": "BookWebApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/auth/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"pedro.pedrini@example.com\",\n  \"password\": \"password123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/books",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJXZWJBcHAuRGV2IiwiaXNzIjoiV2ViQXBwLkF1dGguRGV2IiwiZXhwIjoxNzA4NjE5NTY3LCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoicGVkcm8ucGVkcmluaUBleGFtcGxlLmNvbSIsImlhdCI6MTcwODYxODk2NywibmJmIjoxNzA4NjE4OTY3fQ.Hs2jJo2V9R6Q5xgWXKrfxyjuWQVGfT_guPK6Rtazd3U"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/books",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJXZWJBcHAuRGV2IiwiaXNzIjoiV2ViQXBwLkF1dGguRGV2IiwiZXhwIjoxNzA4NjE5NTY3LCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoicGVkcm8ucGVkcmluaUBleGFtcGxlLmNvbSIsImlhdCI6MTcwODYxODk2NywibmJmIjoxNzA4NjE4OTY3fQ.Hs2jJo2V9R6Q5xgWXKrfxyjuWQVGfT_guPK6Rtazd3U"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"New book 3\",\n  \"isbn\": \"123456\",\n  \"author\": \"New Author 3\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/books/1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJXZWJBcHAuRGV2IiwiaXNzIjoiV2ViQXBwLkF1dGguRGV2IiwiZXhwIjoxNzA4NjE5NTY3LCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoicGVkcm8ucGVkcmluaUBleGFtcGxlLmNvbSIsImlhdCI6MTcwODYxODk2NywibmJmIjoxNzA4NjE4OTY3fQ.Hs2jJo2V9R6Q5xgWXKrfxyjuWQVGfT_guPK6Rtazd3U"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/books/1",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJXZWJBcHAuRGV2IiwiaXNzIjoiV2ViQXBwLkF1dGguRGV2IiwiZXhwIjoxNzA4NjE5NTY3LCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoicGVkcm8ucGVkcmluaUBleGFtcGxlLmNvbSIsImlhdCI6MTcwODYxODk2NywibmJmIjoxNzA4NjE4OTY3fQ.Hs2jJo2V9R6Q5xgWXKrfxyjuWQVGfT_guPK6Rtazd3U"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Songs of a Dead Dreamer and Grimscribe (2nd edition)\",\n  \"isbn\": \"978-0143107767\",\n  \"author\": \"Thomas Ligotti\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/books/1",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJXZWJBcHAuRGV2IiwiaXNzIjoiV2ViQXBwLkF1dGguRGV2IiwiZXhwIjoxNzA4NjE5NTY3LCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoicGVkcm8ucGVkcmluaUBleGFtcGxlLmNvbSIsImlhdCI6MTcwODYxODk2NywibmJmIjoxNzA4NjE4OTY3fQ.Hs2jJo2V9R6Q5xgWXKrfxyjuWQVGfT_guPK6Rtazd3U"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Some new title\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/books/1",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJXZWJBcHAuRGV2IiwiaXNzIjoiV2ViQXBwLkF1dGguRGV2IiwiZXhwIjoxNzA4NjE5NTY3LCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoicGVkcm8ucGVkcmluaUBleGFtcGxlLmNvbSIsImlhdCI6MTcwODYxODk2NywibmJmIjoxNzA4NjE4OTY3fQ.Hs2jJo2V9R6Q5xgWXKrfxyjuWQVGfT_guPK6Rtazd3U"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
