@@ -57,18 +57,80 @@ There are some additional restrictions related to technical aspects:
 
 #### Business layer
 
+In this layer we define the domain entities that our program is going to work with. Also we define additional abstractions (interfaces) to represent the basic operation that a program may perform with our domain entities.
+
+1. **Domain models**: here we have the Book entity, User entity and the BaseEntity which is just an abstract class containing the basic properties that we expect to find in both entities
+2. **Services**: here we define some interface that work like a contract, specifying some CRUD operations that our program may execute with our domain models.
+3. **Data Utils**: here we define a IDataMapper and a IUserDataMapper interface which represents the basic operations that we can do against a persistent support like a Db or a File system.
+  
+
+* **Observation**: We are not defining data access logic at this level. We are going to define such logic in the *Data access layer*
+
 ![Business package](out/uml.business.design/uml.business.design.png)
 
 #### Data access layer
+
+In this layer we provide the implementation details of some previously defined interfaces from the business layer.
+
+Because I'm working with a Postgres Database, I have defined some concrete classes to connect to that specific database and also some DataMapper concrete classes that contains the required logic to perform CRUD operations against the DB.
+
+The concrete implementations of the business interfaces are:
+
+1. **UserDataMapper**: follows the contract of `IUserDataMapper` and contains the required logic to perform DB operations for the User entity.
+2. **BookDataMapper**: follows the contract of `IDataMapper<Book>` and contains the required logic to perform DB operations for the Book entity.
+   
+
+In addition I have defined a `IDbConnectionFactory` interface that builds and return a `DbConnection`. The main goal is to separate the contruction of the specific Postgres connection. This way the `DataMapper` classes are not concerned about what kind of DB they are connecting to. Also this interface could be extended by other concrete Db connection factories in case we need to interact with other Db engines.
+
 ![Data package](out/uml.data.design/uml.data.design.png)
 
 #### WebApi layer
+
+This layer is responsible of exposing the CRUD endpoints required to manage Books and Users.
+
+In this package we have references to the **Data Layer** and to the **Business Layer** and we setup the concrete classes corresponding to the interfaces by using the Dependency injection functionlity that comes with .Net Core. 
+
+Here we define some controllers that are responsible of exposing the endpoints with the appropriate HTTP Verbs required to perform the CRUD operations:
+
+1. `AuthController`: it exposes the login method required to generate the JWT token. This JWT token is required to interact with the rest of the endpoints
+2. `BookController`: it exposes the methods for CRUD operations for a Book entity.
+3. `UserController`: it exposes the methods for CRUD operations for a User entity.
+
+All the controllers have references to the Business interfaces defined by the business layer. And they perform the operations by interacting with such interfaces, so they don't access to the Data Layer directly.
+
 ![WebApi package](out/uml.webapi.design/uml.webapi.design.png)
 
-### Project structure
-TODO
+#### Tests
 
-### Development process
-TODO
+There is a test project `Business.Test` made in MSTest and using Moq. This project aims to test Business layer classes only. Additional unit tests projects will be needed for the rest of the application.
+
+You can run the tests by calling `dotnet test` at the root of the solution.
+
+### Project structure
+
+* bl-tech-interview-e3 : **solution**
+  * Business : **library class project**
+    * Domain: domain classes
+    * Service: services contracts and implementation
+    * Utils: util classes for the services
+  * Business.Test: **test project for the business layer**
+  * Data: **library class project**.
+    * Mapper (concrete implementation of the data mapper interfaces defined in the business layer)
+    * Utils (db connection factory and db command extension methods)
+  * WebApi: **web api project**
+    * Controllers (controllers with methods for the CRUD operations)
+    * DTO (DTO classes created to represent responses and request of the controllers)
+    * Utils (Domain to DTO mappers)
 
 ### How to run
+The application can run locally by these two methodologies:
+
+1. **Running locally**
+   1. This requires you to have a local instance of Postgres SQL.
+   2. Once you have a local instance of postres you can use the `init.sql` script to initialize the DB for the project.
+   3. Once the DB has been initiated you can run the application by using the launch options known as `.NET Core Launch(web)` in the launch settings of `.vscode/launch.json`.
+      1. Additional tinkering with the configuration settings may be necessary if you chose this methodology.
+2. **Running Docker container**
+   1. Build docker image: `docker compose build`
+   2. Run docker image: `docker compose up`
+   3. Interact with the API by using postman, there is a sample collection in the file `WebApi.postman_collection.json`
