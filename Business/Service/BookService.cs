@@ -45,7 +45,11 @@ public class BookService : IBookService {
             throw new InvalidOperationException($"There is no book with id: {book.Id}. Patch operation can't be completed.");
 
         if(book.Title != null && book.Title != bookToPatch.Title) bookToPatch.Title = book.Title;
+        if(book.Author != null && book.Author != bookToPatch.Author) bookToPatch.Author = book.Author;
         if(book.ISBN != null && book.ISBN != bookToPatch.ISBN) bookToPatch.ISBN = book.ISBN;
+        if(book.UpdateUser != null && book.UpdateUser != bookToPatch.UpdateUser) bookToPatch.UpdateUser = book.UpdateUser;
+        
+        bookToPatch.UpdateDate = DateTime.Now;
 
         book = await _bookDataMapper.Update(bookToPatch.Id, bookToPatch);
 
