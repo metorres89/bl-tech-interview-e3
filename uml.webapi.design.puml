@@ -1,0 +1,134 @@
+@startuml
+
+package "Business" {
+
+    package "Services" {    
+
+        interface IBookService {
+            + GetAll() : Book[]
+            + GetById(id: int) : Book
+            + Create(book: Book) : Book
+            + Update(book: Book) : Book
+            + Patch(book: Book) : Book
+            + Delete(book: Book) : Book
+        }
+
+        interface IUserService {
+            + GetAll() : User[]
+            + GetById(id: int) : User
+            + GetByCredentials(email: string, password: string) : User
+            + Create(user: User) : User
+            + Update(user: User) : User
+            + Patch(user: User) : User
+            + Delete(user: User) : User
+        }
+
+        class BookService {
+            - _bookDataMapper: IDataMapper
+            + GetAll() : Book[]
+            + GetById(id: int) : Book
+            + Create(book: Book) : Book
+            + Update(book: Book) : Book
+            + Patch(book: Book) : Book
+            + Delete(book: Book) : Book
+        }
+        BookService ---|> IBookService
+
+        class UserService {
+            - _userDataMapper: IUserDataMapper
+
+            + GetAll() : User[]
+            + GetById(id: int) : User
+            + GetByCredentials(email: string, password: string) : User
+            + Create(user: User) : User
+            + Update(user: User) : User
+            + Patch(user: User) : User
+            + Delete(user: User) : User
+        }
+        UserService ---|> IUserService
+        
+    }
+
+    package "Data Utils" {
+        
+        interface IDataMapper {
+            + GetAll(): T[]
+            + GetById(id: int): T
+            + Create(entity: T): T
+            + Update(id: int, entity: T): T
+            + Delete(id: int): bool
+        }
+
+        interface IUserDataMapper {
+            + GetByCredentials(user: User): User
+        }
+        IUserDataMapper ---|> IDataMapper
+    }
+
+    UserService --> IUserDataMapper
+    BookService --> IDataMapper
+    
+}
+
+package "Data" {
+
+    package "Data Mapper implementations" {
+        class BookDataMapper {
+            - tableName: string
+            - _dbConnectionFactory: IDbConnectionFactory
+            + GetAll(): Book[]
+            + GetById(id: int): Book
+            + Create(entity: Book): Book
+            + Update(id: int, entity: Book): Book
+            + Delete(id: int): bool
+        }
+        BookDataMapper ---|> IDataMapper
+        
+
+        class UserDataMapper {
+            - tableName: string
+            - _dbConnectionFactory: IDbConnectionFactory
+            + GetAll(): T[]
+            + GetById(id: int): T
+            + GetByCredentials(user: User): User
+            + Create(entity: T): T
+            + Update(id: int, entity: T): T
+            + Delete(id: int): bool
+        }
+        UserDataMapper ---|> IUserDataMapper
+        
+    }
+    
+}
+
+package "WebApi" {
+    class BookController {
+        - _bookService : IBookService
+        + GetBooks(): BookDTO[]
+        + GetBookById(id: int): BookDTO
+        + CreateBook(newBook: UpsertBookDTO): BookDTO
+        + UpdateBook(id: int, bookToUpdate: UpsertBookDTO): BookDTO
+        + PatchBook(id: int, bookToPatch: PatchBookDTO): BookDTO
+        + DeleteBook(id: int): bool
+    }
+    BookController ---> IBookService
+
+    class UserController {
+        - _userService: IUserService
+        + GetUsers(): UserDTO[]
+        + GetUserById(id: int): UserDTO
+        + CreateUser(newUser: UpsertUserDTO): UserDTO
+        + UpdateUser(id: int, bookToUpdate: UpsertUserDTO): UserDTO
+        + PatchUser(id: int, bookToPatch: PatchUserDTO): UserDTO
+        + DeleteUser(id: int): bool
+    }
+    UserController ---> IUserService
+
+    class AuthController {
+        - _userService: IUserService
+        + Login(userLogin: UserLoginDTO): string
+    }
+    AuthController ---> IUserService
+}
+
+@enduml

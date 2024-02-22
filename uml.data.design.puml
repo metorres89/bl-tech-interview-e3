@@ -1,0 +1,75 @@
+@startuml
+
+package "Business" {
+
+    package "Data Utils" {
+        
+        interface IDataMapper {
+            + GetAll(): T[]
+            + GetById(id: int): T
+            + Create(entity: T): T
+            + Update(id: int, entity: T): T
+            + Delete(id: int): bool
+        }
+
+        interface IUserDataMapper {
+            + GetByCredentials(user: User): User
+        }
+        IUserDataMapper ---|> IDataMapper
+    }
+
+    UserService --> IUserDataMapper
+    BookService --> IDataMapper
+}
+
+package "Data" {
+
+    package "Data Mapper implementations" {
+        class BookDataMapper {
+            - tableName: string
+            - _dbConnectionFactory: IDbConnectionFactory
+            + GetAll(): Book[]
+            + GetById(id: int): Book
+            + Create(entity: Book): Book
+            + Update(id: int, entity: Book): Book
+            + Delete(id: int): bool
+        }
+        BookDataMapper ---|> IDataMapper
+        
+
+        class UserDataMapper {
+            - tableName: string
+            - _dbConnectionFactory: IDbConnectionFactory
+            + GetAll(): T[]
+            + GetById(id: int): T
+            + GetByCredentials(user: User): User
+            + Create(entity: T): T
+            + Update(id: int, entity: T): T
+            + Delete(id: int): bool
+        }
+        UserDataMapper ---|> IUserDataMapper
+        
+    }
+
+    
+
+    package "Db Connection Factory" {
+
+        interface IDbConnectionFactory {
+            + GetConnection(): DbConnection
+            + GetConnection(connectionString: string): DbConnection
+        }
+
+        class NpgsqlConnectionFactory {
+            - connectionString: string
+            + GetConnection(): DbConnection
+            + GetConnection(connectionString: string): DbConnection
+        }
+        NpgsqlConnectionFactory ---|> IDbConnectionFactory
+
+        BookDataMapper ---> IDbConnectionFactory
+        UserDataMapper ---> IDbConnectionFactory
+    }
+    
+}
+@enduml

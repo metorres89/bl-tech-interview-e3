@@ -1,0 +1,100 @@
+@startuml
+
+package "Business" {
+
+    package "Domain models" {
+        abstract BaseEntity {
+            - Id: int
+            - CreateDate: DateTime
+            - CreateUser: string
+            - UpdateDate: DateTime
+            - UpdateUser: string
+        }
+
+        class Book {
+            - Title: string
+            - ISBN: string
+            - Author: string
+        }
+
+        Book ---|> BaseEntity
+
+        class User {
+            - FirstName: string
+            - LastName: string
+            - Email: string
+            - Password: string
+        }
+        User ---|> BaseEntity
+    }
+    
+    package "Services" {    
+
+        interface IBookService {
+            + GetAll() : Book[]
+            + GetById(id: int) : Book
+            + Create(book: Book) : Book
+            + Update(book: Book) : Book
+            + Patch(book: Book) : Book
+            + Delete(book: Book) : Book
+        }
+
+        interface IUserService {
+            + GetAll() : User[]
+            + GetById(id: int) : User
+            + GetByCredentials(email: string, password: string) : User
+            + Create(user: User) : User
+            + Update(user: User) : User
+            + Patch(user: User) : User
+            + Delete(user: User) : User
+        }
+
+        class BookService {
+            - _bookDataMapper: IDataMapper
+            + GetAll() : Book[]
+            + GetById(id: int) : Book
+            + Create(book: Book) : Book
+            + Update(book: Book) : Book
+            + Patch(book: Book) : Book
+            + Delete(book: Book) : Book
+        }
+        BookService ---|> IBookService
+
+        class UserService {
+            - _userDataMapper: IUserDataMapper
+
+            + GetAll() : User[]
+            + GetById(id: int) : User
+            + GetByCredentials(email: string, password: string) : User
+            + Create(user: User) : User
+            + Update(user: User) : User
+            + Patch(user: User) : User
+            + Delete(user: User) : User
+        }
+        UserService ---|> IUserService
+        
+    }
+    IBookService ...> Book
+    IUserService ...> User
+
+    package "Data Utils" {
+        
+        interface IDataMapper {
+            + GetAll(): T[]
+            + GetById(id: int): T
+            + Create(entity: T): T
+            + Update(id: int, entity: T): T
+            + Delete(id: int): bool
+        }
+
+        interface IUserDataMapper {
+            + GetByCredentials(user: User): User
+        }
+        IUserDataMapper ---|> IDataMapper
+    }
+
+    UserService --> IUserDataMapper
+    BookService --> IDataMapper
+}
+
+@enduml
