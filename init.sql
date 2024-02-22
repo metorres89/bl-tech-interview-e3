@@ -20,12 +20,40 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.book
     OWNER to postgres;
 
+-- Table: public.user
 
-INSERT INTO public.book (title, author, isbn, created_date, created_user)
-VALUES ('The Great Gatsby', 'F. Scott Fitzgerald', '978-3-16-148410-0', '2022-02-21T12:00:00Z', 'app');
+DROP TABLE IF EXISTS public.user;
 
-INSERT INTO public.book (title, author, isbn, created_date, created_user)
-VALUES ('To Kill a Mockingbird', 'Harper Lee', '978-0-06-112008-4', '2022-02-21T12:30:00Z', 'app');
+CREATE TABLE public.user (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    create_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    create_user VARCHAR(255) NOT NULL,
+    update_date TIMESTAMPTZ,
+    update_user VARCHAR(255)
+);
 
-INSERT INTO public.book (title, author, isbn, created_date, created_user)
-VALUES ('1984', 'George Orwell', '978-0-452-28423-4', '2022-02-21T13:00:00Z', 'app');
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.user
+    OWNER to postgres;
+
+-- Insert some sample books
+INSERT INTO public.book (title, author, isbn, create_date, create_user)
+VALUES ('Songs of a Dead Dreamer and Grimscribe', 'Thomas Ligotti', '978-0143107767', '2024-02-21T12:00:00Z', 'app');
+
+INSERT INTO public.book (title, author, isbn, create_date, create_user)
+VALUES ('Leaves of Grass', 'Walt Whitman', '979-8886000931', '2024-02-21T12:30:00Z', 'app');
+
+INSERT INTO public.book (title, author, isbn, create_date, create_user)
+VALUES ('Stranger Things Happen: Stories', 'Kelly Link', '978-1931520003', '2024-02-21T13:00:00Z', 'app');
+
+-- Insert some sample users
+INSERT INTO public.user (first_name, last_name, email, password, create_user)
+VALUES ('Pedro', 'Pedrini', 'pedro.pedrini@example.com', 'password123', 'app');
+
+INSERT INTO public.user (first_name, last_name, email, password, create_user)
+VALUES ('Maria', 'Merlo', 'maria.merlo@example.com', 'password123', 'app');

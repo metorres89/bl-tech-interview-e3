@@ -9,9 +9,9 @@ namespace BlTechInterviewE3.Business.Service
 {
     public class UserService : IUserService
     {
-        private readonly IDataMapper<User> _userDataMapper;
+        private readonly IUserDataMapper _userDataMapper;
 
-        public UserService(IDataMapper<User> userDataMapper)
+        public UserService(IUserDataMapper userDataMapper)
         {
             _userDataMapper = userDataMapper ?? throw new ArgumentNullException("User data mapper is null");
         }
@@ -29,13 +29,11 @@ namespace BlTechInterviewE3.Business.Service
         }
 
         public async Task<User> GetByCredentials(string email, string password) {
-            return new User {
-                Id = 1,
-                FirstName = "Test",
-                LastName = "Test",
-                Email = "Test",
-                Password = "Test"
-            };
+            User user = await _userDataMapper.GetByCredentials(new User {
+                Email = email,
+                Password = password
+            });
+            return user;
         }
 
         public async Task<User> Create(User user)

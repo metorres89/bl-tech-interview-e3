@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using BlTechInterviewE3.Business.Domain;
+using BlTechInterviewE3.WebApi.DTO.User;
 using BlTechInterviewE3.Business.Service.Contract;
 using System.Security.Claims;
 using System.Text;
@@ -22,7 +22,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<string>> Login([FromBody] UserLogin userLogin)
+    public async Task<ActionResult<string>> Login([FromBody] UserLoginDTO userLogin)
     {
         // Validate user credentials using IUserService or any other service
         var user = await _userService.GetByCredentials(userLogin.Email, userLogin.Password);

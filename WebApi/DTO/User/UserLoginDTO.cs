@@ -1,13 +1,10 @@
-using BlTechInterviewE3.Business.Domain.Common;
+namespace BlTechInterviewE3.WebApi.DTO.User;
 
-namespace BlTechInterviewE3.Business.Domain;
-
-public class UserLogin {
+public class UserLoginDTO {
     public string Email { get; set; }
-
     public string Password { get; set; }
 
-    public UserLogin() {
+    public UserLoginDTO() {
         this.Email = string.Empty;
         this.Password = string.Empty;
     }

@@ -22,7 +22,7 @@ builder.Services.AddSingleton<IConfiguration>(config);
 builder.Services.AddScoped<IDbConnectionFactory, NpgsqlConnectionFactory>(serviceProvider => {
     return new NpgsqlConnectionFactory(Environment.GetEnvironmentVariable("APP_CONNECTION_STRING") ?? string.Empty);
 });
-builder.Services.AddScoped<IDataMapper<User>, UserDataMapper>();
+builder.Services.AddScoped<IUserDataMapper, UserDataMapper>();
 builder.Services.AddScoped<IDataMapper<Book>, BookDataMapper>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBookService, BookService>();

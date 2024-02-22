@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
 using BlTechInterviewE3.Business.Domain;
 using BlTechInterviewE3.Business.Service.Contract;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BlTechInterviewE3.WebApi.DTO.Book;
 using BlTechInterviewE3.WebApi.Utils;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BlTechInterviewE3.WebApi.Controllers;
 
@@ -30,7 +30,7 @@ public class BookController : ControllerBase
     {
         var books = await _bookService.GetAll();
         var booksDtos = books.Select(BookDTOMapper.GetBookDTO);
-        return Ok(books);
+        return Ok(booksDtos);
     }
 
     [HttpGet("{id}")]
@@ -62,7 +62,7 @@ public class BookController : ControllerBase
 
         var createdBookDTO = BookDTOMapper.GetBookDTO(createdBook);
 
-        return CreatedAtAction(nameof(GetBookById), new { id = createdBook.Id }, createdBookDTO);
+        return CreatedAtAction(nameof(GetBookById), new { id = createdBookDTO.Id }, createdBookDTO);
     }
 
     [HttpPut("{id}")]
